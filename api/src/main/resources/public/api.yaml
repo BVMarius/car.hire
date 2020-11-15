@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.0.1
 info:
   description: Orchestrator for the Car Rental API flow, based on Java. Main entry point to the Car rental API.
   version: "1.0.0"
@@ -8,11 +8,20 @@ info:
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+servers:
+  - url: http://localhost:{port}
+    description: local environment
+    variables:
+      port:
+        default: '8080'
+tags:
+  - name: user
+    description: Creates an user
 paths:
   /api/user:
     post:
-      callbacks: {}
-      deprecated: false
+      tags:
+        - user
       description: Creates an user
       operationId: createUser
       requestBody:
@@ -23,31 +32,71 @@ paths:
         description: Creates an user
         required: true
       responses:
-        '201'
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SuccessResponse'
-        description: CreateResponse
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+          description: CreateResponse
         '401':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
         '403':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
         '500':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
       summary: Creates an user
+  /sample:
+    post:
       tags:
-        - user
+        - sample
+      summary: get sample
+      description: returns a list of all the sample objects, without any filtering
+      operationId: getSamples
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SampleDTO'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/ServerError'
 components:
+  responses:
+    Unauthorized:
+      description: unauthorized
+    BadRequest:
+      description: bad request
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/ValidationDTO'
+    ServerError:
+      description: internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDTO'
   schemas:
     CreateUserRequest:
       description: Create user details.
@@ -80,4 +129,30 @@ components:
           enum:
             - ACTIVE
             - DELETED
-
+    ValidationDTO:
+      type: object
+      properties:
+        code:
+          type: string
+        field:
+          type: string
+        description:
+          type: string
+    ErrorDTO:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    SampleDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: id of the sample
+        name:
+          type: string
+          example: Sample name
+          description: full name of the sample
