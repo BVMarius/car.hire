@@ -1,85 +1,83 @@
-openapi: 3.0.1
+openapi: 3.0.0
 info:
-  title: Car Hire API
-  version: 0.1.0
+  description: Orchestrator for the Car Rental API flow, based on Java. Main entry point to the Car rental API.
+  version: "1.0.0"
+  title: Car Rental API
   contact:
-    name: Your name here
-  description: Car Hire API
-servers:
-  - url: http://localhost:{port}
-    description: local environment
-    variables:
-      port:
-        default: '8080'
-tags:
-  - name: sample
-    description: Sample resource endpoint
+    email: marius.moraru@live.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 paths:
-  /sample:
-    get:
-      tags:
-        - sample
-      summary: get sample
-      description: returns a list of all the sample objects, without any filtering
-      operationId: getSamples
+  /api/user:
+    post:
+      callbacks: {}
+      deprecated: false
+      description: Creates an user
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+        description: Creates an user
+        required: true
       responses:
-        '200':
-          description: success
+        '201'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SuccessResponse'
+        description: CreateResponse
+        '401':
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/SampleDTO'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
+                $ref: '#/components/schemas/UnauthorizedResponse'
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
         '500':
-          $ref: '#/components/responses/ServerError'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+      summary: Creates an user
+      tags:
+        - user
 components:
-  responses:
-    Unauthorized:
-      description: unauthorized
-    BadRequest:
-      description: bad request
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/ValidationDTO'
-    ServerError:
-      description: internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorDTO'
   schemas:
-    ValidationDTO:
-      type: object
-      properties:
-        code:
-          type: string
-        field:
-          type: string
-        description:
-          type: string
-    ErrorDTO:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    SampleDTO:
-      type: object
+    CreateUserRequest:
+      description: Create user details.
       properties:
         id:
-          type: integer
-          format: int32
-          description: id of the sample
-        name:
+          description: User id
           type: string
-          example: Sample name
-          description: full name of the sample
+        email:
+          description: User's email
+          type: string
+        password:
+          description: User's password
+          type: string
+        username:
+          description: Username of the user
+          type: string
+        first_name:
+          description: First name of the user
+          type: string
+        last_name:
+          description: Last name of the user
+          type: string
+        country:
+          description: Contry of residence for the user
+          type: string
+        licese_number:
+          description: License number
+        status:
+          description: User status
+          enum:
+            - ACTIVE
+            - DELETED
+
