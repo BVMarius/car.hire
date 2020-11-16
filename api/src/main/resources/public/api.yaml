@@ -121,8 +121,6 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
                   $ref: '#/components/schemas/UserResponse'
           description: List all users
         '401':
