@@ -1,7 +1,6 @@
 package ro.agilehub.javacourse.car.hire.user.controller;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -9,7 +8,6 @@ import ro.agilehub.javacourse.car.hire.api.model.CreateUserRequest;
 import ro.agilehub.javacourse.car.hire.api.model.SuccessResponse;
 import ro.agilehub.javacourse.car.hire.api.model.UserResponse;
 import ro.agilehub.javacourse.car.hire.api.specification.ApiApi;
-import ro.agilehub.javacourse.car.hire.api.specification.ApiUtil;
 
 import javax.validation.Valid;
 import java.util.Collections;
@@ -40,7 +38,7 @@ public class UserController implements ApiApi {
     @Override
     public ResponseEntity<UserResponse> getUserById(Long userId) {
         UserResponse userResponse = new UserResponse();
-        userResponse.setId(UUID.randomUUID().toString());
+        userResponse.setId(2523);
         userResponse.setFirstName("Jhon");
         return new ResponseEntity<>(userResponse,HttpStatus.valueOf(200));
     }
@@ -51,11 +49,11 @@ public class UserController implements ApiApi {
     }
 
     @Override
-    public ResponseEntity<List<UserResponse>> apiUserListGet() {
+    public ResponseEntity<List<UserResponse>> listUsers() {
 
 
         UserResponse userResponse = new UserResponse();
-        userResponse.setId(UUID.randomUUID().toString());
+        userResponse.setId(12355);
         userResponse.setFirstName("Jhon");
         List<UserResponse> userResponseList = Collections.singletonList(userResponse);
 

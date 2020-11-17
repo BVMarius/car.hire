@@ -17,6 +17,10 @@ servers:
 tags:
   - name: user
     description: Endpoints related with user resources
+  - name: fleet_management
+    description: Endpoints related with car resources
+  - name: rental
+    description: Endpoints related with rental service resources
 paths:
   /api/user:
     post:
@@ -63,11 +67,12 @@ paths:
                 $ref: '#/components/schemas/UnauthorizedResponse'
           description: Unauthorized
       summary: Creates an user
-  /api/user/list:
+  /api/user/user_entries:
     get:
       tags:
         - user
       description: List all users
+      operationId: listUsers
       responses:
         '200':
           content:
@@ -121,7 +126,7 @@ paths:
           content:
             application/json:
               schema:
-                  $ref: '#/components/schemas/UserResponse'
+                $ref: '#/components/schemas/UserResponse'
           description: List all users
         '401':
           content:
@@ -159,7 +164,7 @@ paths:
           description: "user that needs to be updated"
           required: true
           schema:
-            type: string
+            type: integer
             format: int64
       requestBody:
         content:
@@ -169,6 +174,8 @@ paths:
         description: Creates an user
         required: true
       responses:
+        '200':
+          description: "Update successfull"
         '400':
           description: "Invalid user supplied"
         '404':
@@ -194,6 +201,8 @@ paths:
             type: string
             format: int64
       responses:
+        '204':
+          description: "Resource deleted successfull"
         '400':
           description: "Invalid username supplied"
         '404':
@@ -204,6 +213,389 @@ paths:
               schema:
                 $ref: "#/components/schemas/UnprocessableEntityResponse"
           description: UnprocessableEntity
+  /api/car:
+    post:
+      tags:
+        - fleet_management
+      description: Creates a car
+      operationId: createCar
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCarRequest'
+        description: Creates a car
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+          description: CreateResponse
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntityResponse"
+          description: UnprocessableEntity
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
+      summary: Creates a car
+  /api/car/car_entries:
+    get:
+      tags:
+        - fleet_management
+      description: List all cars
+      operationId: listCars
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarResponse'
+          description: List all users
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntityResponse"
+          description: UnprocessableEntity
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
+  /api/car/{carId}:
+    get:
+      tags:
+        - fleet_management
+      description: Return a specific car by id
+      summary: "Find car by ID"
+      operationId: getCarById
+      parameters:
+        - name: carId
+          in: path
+          description: ID of car which will be returned
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarResponse'
+          description: List all cars
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntityResponse"
+          description: UnprocessableEntity
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
+    patch:
+      tags:
+        - fleet_management
+      summary: Updates  a specific car
+      description: This can only be done by the logged in user.
+      operationId: updateCar
+      parameters:
+        - name: carId
+          in: path
+          description: "car that needs to be updated"
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+        description: Creates an user
+        required: true
+      responses:
+        '200':
+          description: "Update successfull"
+        '400':
+          description: "Invalid user supplied"
+        '404':
+          description: "User not found"
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntityResponse"
+          description: UnprocessableEntity
+    delete:
+      tags:
+        - fleet_management
+      summary: Delete a car
+      description: This can only be done by the logged in user.
+      operationId: deleteCar
+      parameters:
+        - name: carId
+          in: path
+          description: The id of the user that needs to be deleted
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: "Resource deleted successfull"
+        '400':
+          description: "Invalid username supplied"
+        '404':
+          description: "User not found"
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntityResponse"
+          description: UnprocessableEntity
+  /api/rental:
+    post:
+      tags:
+        - rental
+      description: Creates a rental
+      operationId: createRental
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRentalRequest'
+        description: Creates an rental
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+          description: CreateResponse
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntityResponse"
+          description: UnprocessableEntity
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
+      summary: Creates an user
+  /api/rental/rental_entries:
+    get:
+      tags:
+        - rental
+      description: List all rentals to date
+      operationId: listRental
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RentalResponse'
+          description: List all users
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntityResponse"
+          description: UnprocessableEntity
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
+  /api/rental/{rentalId}:
+    get:
+      tags:
+        - rental
+      description: Return a specific rental by id
+      summary: "Find rented car by ID"
+      operationId: getRentalById
+      parameters:
+        - name: rentalId
+          in: path
+          description: ID of rental service to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+          description: List all users
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntityResponse"
+          description: UnprocessableEntity
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedResponse'
+          description: Unauthorized
+    patch:
+      tags:
+        - rental
+      summary: Updates  a specific rental
+      description: This can only be done by the logged in user.
+      operationId: updateRental
+      parameters:
+        - name: rentalId
+          in: path
+          description: "user that needs to be updated"
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRentalRequest'
+        description: Creates an user
+        required: true
+      responses:
+        '200':
+          description: "Update successfull"
+        '400':
+          description: "Invalid user supplied"
+        '404':
+          description: "User not found"
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntityResponse"
+          description: UnprocessableEntity
+    delete:
+      tags:
+        - rental
+      summary: Delete a car
+      description: This can only be done by the logged in user.
+      operationId: deleteRental
+      parameters:
+        - name: rentalId
+          in: path
+          description: The id of the user that needs to be deleted
+          required: true
+          schema:
+            type: string
+            format: int64
+      responses:
+        '204':
+          description: "Resource deleted successfull"
+        '400':
+          description: "Invalid username supplied"
+        '404':
+          description: "User not found"
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntityResponse"
+          description: UnprocessableEntity
+
 components:
   responses:
     Unauthorized:
@@ -232,9 +624,6 @@ components:
     CreateUserRequest:
       description: Create user details.
       properties:
-        id:
-          description: User id
-          type: string
         email:
           description: User's email
           type: string
@@ -265,7 +654,7 @@ components:
       properties:
         id:
           description: User id
-          type: string
+          type: integer
         email:
           description: User's email
           type: string
@@ -296,7 +685,7 @@ components:
       properties:
         id:
           description: User id
-          type: string
+          type: integer
     ValidationDTO:
       type: object
       properties:
@@ -344,3 +733,124 @@ components:
           type: string
       title: ValidationError
       type: object
+    CreateCarRequest:
+      description: Create car details.
+      properties:
+        make:
+          description: car's maker
+          type: string
+        model:
+          description: model of the car
+          type: string
+        year:
+          description: the year on which the car war build
+          type: integer
+        mileage:
+          description: Number of kilometers that a car holds
+          type: integer
+        fuel:
+          description: Fuel of the car
+          enum:
+            - GASOLINE
+            - DIESEL
+            - LIQUEFIED_NATURAL_GAS
+            - HYBRID
+            - ELECTRIC
+        car_class:
+          description: Car class
+          enum:
+            - COMPACT
+            - EXECUTIVE
+            - MINIVAN
+            - SUV
+        plate_number:
+          description: Plate number
+        status:
+          description: Car status
+          enum:
+            - ACTIVE
+            - DELETED
+    CarResponse:
+      properties:
+        id:
+          description: car id
+          type: integer
+        make:
+          description: car's maker
+          type: string
+        model:
+          description: model of the car
+          type: string
+        year:
+          description: the year on which the car war build
+          type: integer
+        mileage:
+          description: Number of kilometers that a car holds
+          type: integer
+        fuel:
+          description: Fuel of the car
+          enum:
+            - GASOLINE
+            - DIESEL
+            - LIQUEFIED_NATURAL_GAS
+            - HYBRID
+            - ELECTRIC
+        car_class:
+          description: Car class
+          enum:
+            - COMPACT
+            - EXECUTIVE
+            - MINIVAN
+            - SUV
+        plate_number:
+          description: Plate number
+        status:
+          description: Car status
+          enum:
+            - ACTIVE
+            - DELETED
+    CreateRentalRequest:
+      properties:
+        car_id:
+          description: car id
+          type: integer
+        user_id:
+          description: user id
+          type: integer
+        start_date:
+          description: ISO 8601 format datetime representing starting time of dropoff slot
+          format: date-time
+          type: string
+        end_date:
+          description: ISO 8601 format datetime representing starting time of dropoff slot
+          format: date-time
+          type: string
+        status:
+          description: Car status
+          enum:
+            - ACTIVE
+            - DELETED
+    RentalResponse:
+      properties:
+        id:
+          description: rental id
+          type: integer
+        car_id:
+          description: car id
+          type: integer
+        user_id:
+          description: user id
+          type: integer
+        start_date:
+          description: ISO 8601 format datetime representing starting time of dropoff slot
+          format: date-time
+          type: string
+        end_date:
+          description: ISO 8601 format datetime representing starting time of dropoff slot
+          format: date-time
+          type: string
+        status:
+          description: Car status
+          enum:
+            - ACTIVE
+            - DELETED
