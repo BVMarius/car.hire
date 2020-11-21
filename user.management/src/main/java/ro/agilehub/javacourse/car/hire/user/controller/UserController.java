@@ -1,13 +1,18 @@
 package ro.agilehub.javacourse.car.hire.user.controller;
 
+import io.swagger.annotations.ApiParam;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.NativeWebRequest;
 import ro.agilehub.javacourse.car.hire.api.model.CreateUserRequest;
 import ro.agilehub.javacourse.car.hire.api.model.SuccessResponse;
 import ro.agilehub.javacourse.car.hire.api.model.UserResponse;
-import ro.agilehub.javacourse.car.hire.api.specification.ApiApi;
+import ro.agilehub.javacourse.car.hire.api.specification.CarApi;
+import ro.agilehub.javacourse.car.hire.api.specification.UserApi;
+
 
 import javax.validation.Valid;
 import java.util.Collections;
@@ -16,7 +21,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-public class UserController implements ApiApi {
+public class UserController implements UserApi {
 
 
 
@@ -43,9 +48,10 @@ public class UserController implements ApiApi {
         return new ResponseEntity<>(userResponse,HttpStatus.valueOf(200));
     }
 
+
     @Override
-    public ResponseEntity<Void> updateUser(String userId, @Valid CreateUserRequest createUserRequest) {
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Void> updateUser( Long userId, CreateUserRequest createUserRequest) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     @Override

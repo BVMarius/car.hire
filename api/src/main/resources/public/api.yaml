@@ -22,7 +22,7 @@ tags:
   - name: rental
     description: Endpoints related with rental service resources
 paths:
-  /api/user:
+  /user:
     post:
       tags:
         - user
@@ -43,11 +43,7 @@ paths:
                 $ref: '#/components/schemas/SuccessResponse'
           description: CreateResponse
         '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedResponse'
-          description: Unauthorized
+          $ref: '#/components/responses/Unauthorized'
         '403':
           content:
             application/json:
@@ -61,18 +57,14 @@ paths:
                 $ref: "#/components/schemas/UnprocessableEntityResponse"
           description: UnprocessableEntity
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedResponse'
-          description: Unauthorized
+          $ref: '#/components/responses/Unauthorized'
       summary: Creates an user
-  /api/user/user_entries:
     get:
       tags:
         - user
       description: List all users
       operationId: listUsers
+      summary: List all users
       responses:
         '200':
           content:
@@ -83,11 +75,7 @@ paths:
                   $ref: '#/components/schemas/UserResponse'
           description: List all users
         '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedResponse'
-          description: Unauthorized
+          $ref: '#/components/responses/Unauthorized'
         '403':
           content:
             application/json:
@@ -101,12 +89,8 @@ paths:
                 $ref: "#/components/schemas/UnprocessableEntityResponse"
           description: UnprocessableEntity
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedResponse'
-          description: Unauthorized
-  /api/user/{userId}:
+          $ref: '#/components/responses/Unauthorized'
+  /user/{userId}:
     get:
       tags:
         - user
@@ -129,11 +113,7 @@ paths:
                 $ref: '#/components/schemas/UserResponse'
           description: List all users
         '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedResponse'
-          description: Unauthorized
+          $ref: '#/components/responses/Unauthorized'
         '403':
           content:
             application/json:
@@ -147,11 +127,7 @@ paths:
                 $ref: "#/components/schemas/UnprocessableEntityResponse"
           description: UnprocessableEntity
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedResponse'
-          description: Unauthorized
+          $ref: '#/components/responses/Unauthorized'
     patch:
       tags:
         - user
@@ -213,7 +189,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/UnprocessableEntityResponse"
           description: UnprocessableEntity
-  /api/car:
+  /car:
     post:
       tags:
         - fleet_management
@@ -234,11 +210,7 @@ paths:
                 $ref: '#/components/schemas/SuccessResponse'
           description: CreateResponse
         '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedResponse'
-          description: Unauthorized
+          $ref: '#/components/responses/Unauthorized'
         '403':
           content:
             application/json:
@@ -252,13 +224,9 @@ paths:
                 $ref: "#/components/schemas/UnprocessableEntityResponse"
           description: UnprocessableEntity
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedResponse'
-          description: Unauthorized
+          $ref: '#/components/responses/Unauthorized'
       summary: Creates a car
-  /api/car/car_entries:
+  /car/car_entries:
     get:
       tags:
         - fleet_management
@@ -274,11 +242,7 @@ paths:
                   $ref: '#/components/schemas/CarResponse'
           description: List all users
         '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedResponse'
-          description: Unauthorized
+          $ref: '#/components/responses/Unauthorized'
         '403':
           content:
             application/json:
@@ -292,12 +256,8 @@ paths:
                 $ref: "#/components/schemas/UnprocessableEntityResponse"
           description: UnprocessableEntity
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedResponse'
-          description: Unauthorized
-  /api/car/{carId}:
+          $ref: '#/components/responses/Unauthorized'
+  /car/{carId}:
     get:
       tags:
         - fleet_management
@@ -320,11 +280,7 @@ paths:
                 $ref: '#/components/schemas/CarResponse'
           description: List all cars
         '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedResponse'
-          description: Unauthorized
+          $ref: '#/components/responses/Unauthorized'
         '403':
           content:
             application/json:
@@ -338,11 +294,7 @@ paths:
                 $ref: "#/components/schemas/UnprocessableEntityResponse"
           description: UnprocessableEntity
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedResponse'
-          description: Unauthorized
+          $ref: '#/components/responses/Unauthorized'
     patch:
       tags:
         - fleet_management
@@ -404,7 +356,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/UnprocessableEntityResponse"
           description: UnprocessableEntity
-  /api/rental:
+  /rental:
     post:
       tags:
         - rental
@@ -425,11 +377,7 @@ paths:
                 $ref: '#/components/schemas/SuccessResponse'
           description: CreateResponse
         '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedResponse'
-          description: Unauthorized
+          $ref: '#/components/responses/Unauthorized'
         '403':
           content:
             application/json:
@@ -443,13 +391,9 @@ paths:
                 $ref: "#/components/schemas/UnprocessableEntityResponse"
           description: UnprocessableEntity
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedResponse'
-          description: Unauthorized
+          $ref: '#/components/responses/Unauthorized'
       summary: Creates an user
-  /api/rental/rental_entries:
+  /rental/rental_entries:
     get:
       tags:
         - rental
@@ -465,11 +409,7 @@ paths:
                   $ref: '#/components/schemas/RentalResponse'
           description: List all users
         '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedResponse'
-          description: Unauthorized
+          $ref: '#/components/responses/Unauthorized'
         '403':
           content:
             application/json:
@@ -483,12 +423,8 @@ paths:
                 $ref: "#/components/schemas/UnprocessableEntityResponse"
           description: UnprocessableEntity
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedResponse'
-          description: Unauthorized
-  /api/rental/{rentalId}:
+          $ref: '#/components/responses/Unauthorized'
+  /rental/{rentalId}:
     get:
       tags:
         - rental
@@ -511,11 +447,7 @@ paths:
                 $ref: '#/components/schemas/UserResponse'
           description: List all users
         '401':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedResponse'
-          description: Unauthorized
+          $ref: '#/components/responses/Unauthorized'
         '403':
           content:
             application/json:
@@ -529,11 +461,7 @@ paths:
                 $ref: "#/components/schemas/UnprocessableEntityResponse"
           description: UnprocessableEntity
         '500':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UnauthorizedResponse'
-          description: Unauthorized
+          $ref: '#/components/responses/Unauthorized'
     patch:
       tags:
         - rental
@@ -599,7 +527,13 @@ paths:
 components:
   responses:
     Unauthorized:
-      description: unauthorized
+      description: unauthorized response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/UnauthorizedResponse'
     BadRequest:
       description: bad request
       content:
@@ -633,10 +567,10 @@ components:
         username:
           description: Username of the user
           type: string
-        first_name:
+        firstName:
           description: First name of the user
           type: string
-        last_name:
+        lastName:
           description: Last name of the user
           type: string
         country:
@@ -658,16 +592,13 @@ components:
         email:
           description: User's email
           type: string
-        password:
-          description: User's password
-          type: string
         username:
           description: Username of the user
           type: string
-        first_name:
+        firstName:
           description: First name of the user
           type: string
-        last_name:
+        lastName:
           description: Last name of the user
           type: string
         country:
@@ -719,13 +650,13 @@ components:
         code:
           description: Code representing reason for error
           enum:
-            - invalid_constraint
-            - invalid_format
-            - invalid_type
-            - invalid_enum_value
-            - in_use
-            - not_editable
-            - required
+            - INVALID_CONSTRAINT
+            - INVALID_FORMAT
+            - INVALID_TYPE
+            - INVALID_ENUM_VALUE
+            - IN_USE
+            - NOT_EDITABLE
+            - REQUIRED
           type: string
         detail:
           description: Error detail
@@ -756,14 +687,14 @@ components:
             - LIQUEFIED_NATURAL_GAS
             - HYBRID
             - ELECTRIC
-        car_class:
+        carClass:
           description: Car class
           enum:
             - COMPACT
             - EXECUTIVE
             - MINIVAN
             - SUV
-        plate_number:
+        plateNumber:
           description: Plate number
         status:
           description: Car status
@@ -795,14 +726,14 @@ components:
             - LIQUEFIED_NATURAL_GAS
             - HYBRID
             - ELECTRIC
-        car_class:
+        carClass:
           description: Car class
           enum:
             - COMPACT
             - EXECUTIVE
             - MINIVAN
             - SUV
-        plate_number:
+        plateNumber:
           description: Plate number
         status:
           description: Car status
@@ -811,17 +742,17 @@ components:
             - DELETED
     CreateRentalRequest:
       properties:
-        car_id:
+        carId:
           description: car id
           type: integer
-        user_id:
+        userId:
           description: user id
           type: integer
-        start_date:
+        startDate:
           description: ISO 8601 format datetime representing starting time of dropoff slot
           format: date-time
           type: string
-        end_date:
+        endDate:
           description: ISO 8601 format datetime representing starting time of dropoff slot
           format: date-time
           type: string
@@ -835,17 +766,17 @@ components:
         id:
           description: rental id
           type: integer
-        car_id:
+        carId:
           description: car id
           type: integer
-        user_id:
+        userId:
           description: user id
           type: integer
-        start_date:
+        startDate:
           description: ISO 8601 format datetime representing starting time of dropoff slot
           format: date-time
           type: string
-        end_date:
+        endDate:
           description: ISO 8601 format datetime representing starting time of dropoff slot
           format: date-time
           type: string
