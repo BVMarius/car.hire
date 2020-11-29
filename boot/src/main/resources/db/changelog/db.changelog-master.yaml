@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: '0001-modify-data-type'
+      author: mariusmoraru
+      comments: 'Change the datatype of a column, to be used as fk, in order to link it to another table '
+      changes:
+        - addColumn:
+            tableName: consumers
+            columns:
+              - column:
+                  name: country_id
+                  type: integer
+  - changeSet:
+      id: '0002-add-foreign-key-constraint'
+      author: mariusmoraru
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: country_id
+            baseTableName: consumers
+            baseTableSchemaName: public
+            constraintName: fk_users_countries
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: countries
+            referencedTableSchemaName: public
+            validate: true
+  - changeSet:
+      id: '0003-drop-column'
+      comments: 'The column should be dropped becuase we will not retrive the external id from Exp interface'
+      author: mariusmoraru
+      changes:
+        - dropColumn:
+            columnName: external_id
+            schemaName: public
+            tableName: cars
