@@ -10,11 +10,12 @@ import ro.agilehub.javacourse.car.hire.api.model.SuccessResponse;
 import ro.agilehub.javacourse.car.hire.api.model.UserResponse;
 
 import ro.agilehub.javacourse.car.hire.api.specification.UserApi;
+import ro.agilehub.javacourse.car.hire.user.entity.UserEntity;
+import ro.agilehub.javacourse.car.hire.user.mapper.UserEntityToResponseMapper;
 import ro.agilehub.javacourse.car.hire.user.mapper.UserMapper;
 import ro.agilehub.javacourse.car.hire.user.service.UserService;
 
 import javax.validation.Valid;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +23,12 @@ import java.util.Optional;
 @RestController
 public class UserController implements UserApi {
 
-  @Autowired private UserService userService;
-  @Autowired private UserMapper userMapper;
+  @Autowired
+  private UserService userService;
+  @Autowired
+  private UserMapper userMapper;
+  @Autowired
+  private UserEntityToResponseMapper userEntityToResponseMapper;
 
   @Override
   public Optional<NativeWebRequest> getRequest() {
@@ -32,8 +37,9 @@ public class UserController implements UserApi {
 
   @Override
   public ResponseEntity<SuccessResponse> createUser(@Valid CreateUserRequest createUserRequest) {
-    userService.createUser(userMapper.userRequestToUserEntity(createUserRequest));
-    return new ResponseEntity<>(HttpStatus.OK);
+    UserEntity userEntity = userService.createUser(userMapper.userRequestToUserEntity(createUserRequest));
+
+    return new ResponseEntity<>(userMapper.userEntityToUserResponse(userEntity),HttpStatus.OK);
   }
 
   @Override
@@ -57,11 +63,9 @@ public class UserController implements UserApi {
   @Override
   public ResponseEntity<List<UserResponse>> listUsers() {
 
-    UserResponse userResponse = new UserResponse();
-    userResponse.setId(12355);
-    userResponse.setFirstName("Jhon");
-    List<UserResponse> userResponseList = Collections.singletonList(userResponse);
 
-    return new ResponseEntity<>(userResponseList, HttpStatus.valueOf(200));
+    List<UserEntity> userEntityList = userService.listUsers();
+
+    return new ResponseEntity<>(userEntityToResponseMapper.listOfUserEntityToUserResponse(userEntityList), HttpStatus.valueOf(200));
   }
 }

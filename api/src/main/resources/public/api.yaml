@@ -575,7 +575,7 @@ components:
           type: string
         country:
           description: Contry of residence for the user
-          type: string
+          type: integer
         licese_number:
           description: License number
         status:
