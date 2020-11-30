@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.NativeWebRequest;
 import ro.agilehub.javacourse.car.hire.api.model.CreateUserRequest;
 import ro.agilehub.javacourse.car.hire.api.model.SuccessResponse;
 import ro.agilehub.javacourse.car.hire.api.model.UserResponse;
@@ -17,7 +16,6 @@ import ro.agilehub.javacourse.car.hire.user.service.UserService;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class UserController implements UserApi {
@@ -26,10 +24,7 @@ public class UserController implements UserApi {
   @Autowired private UserMapper userMapper;
   @Autowired private UserEntityToResponseMapper userEntityToResponseMapper;
 
-  @Override
-  public Optional<NativeWebRequest> getRequest() {
-    return Optional.empty();
-  }
+
 
   @Override
   public ResponseEntity<SuccessResponse> createUser(@Valid CreateUserRequest createUserRequest) {
