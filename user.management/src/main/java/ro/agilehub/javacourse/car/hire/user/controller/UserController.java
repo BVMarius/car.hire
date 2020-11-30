@@ -19,16 +19,12 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-
 @RestController
 public class UserController implements UserApi {
 
-  @Autowired
-  private UserService userService;
-  @Autowired
-  private UserMapper userMapper;
-  @Autowired
-  private UserEntityToResponseMapper userEntityToResponseMapper;
+  @Autowired private UserService userService;
+  @Autowired private UserMapper userMapper;
+  @Autowired private UserEntityToResponseMapper userEntityToResponseMapper;
 
   @Override
   public Optional<NativeWebRequest> getRequest() {
@@ -37,35 +33,45 @@ public class UserController implements UserApi {
 
   @Override
   public ResponseEntity<SuccessResponse> createUser(@Valid CreateUserRequest createUserRequest) {
-    UserEntity userEntity = userService.createUser(userMapper.userRequestToUserEntity(createUserRequest));
+    UserEntity userEntity =
+        userService.createUser(userMapper.userRequestToUserEntity(createUserRequest));
 
-    return new ResponseEntity<>(userMapper.userEntityToUserResponse(userEntity),HttpStatus.OK);
+    return new ResponseEntity<>(userMapper.userEntityToUserResponse(userEntity), HttpStatus.OK);
   }
 
   @Override
-  public ResponseEntity<Void> deleteUser(String userId) {
-    return new ResponseEntity<>(HttpStatus.OK);
+  public ResponseEntity<Void> deleteUser(Integer userId) {
+    userService.deleteUser(userId);
+    return new ResponseEntity<>(HttpStatus.valueOf(204));
   }
 
   @Override
-  public ResponseEntity<UserResponse> getUserById(Long userId) {
-    UserResponse userResponse = new UserResponse();
-    userResponse.setId(2523);
-    userResponse.setFirstName("Jhon");
-    return new ResponseEntity<>(userResponse, HttpStatus.valueOf(200));
+  public ResponseEntity<UserResponse> getUserById(Integer userId) {
+
+    return new ResponseEntity<>(
+        userEntityToResponseMapper.userToUserResponse(userService.getUserById(userId)),
+        HttpStatus.valueOf(200));
   }
 
   @Override
-  public ResponseEntity<Void> updateUser(Long userId, CreateUserRequest createUserRequest) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+  public ResponseEntity<Void> updateUser(Integer userId, CreateUserRequest createUserRequest) {
+    String email = createUserRequest.getEmail();
+    String username = createUserRequest.getUsername();
+    String firstName = createUserRequest.getFirstName();
+    String lastName = createUserRequest.getLastName();
+    String password = createUserRequest.getPassword();
+    Integer country = createUserRequest.getCountry();
+    userService.updateUser(email,password,username,firstName,lastName,country,userId);
+    return new ResponseEntity<>(HttpStatus.valueOf(200));
   }
 
   @Override
   public ResponseEntity<List<UserResponse>> listUsers() {
 
-
     List<UserEntity> userEntityList = userService.listUsers();
 
-    return new ResponseEntity<>(userEntityToResponseMapper.listOfUserEntityToUserResponse(userEntityList), HttpStatus.valueOf(200));
+    return new ResponseEntity<>(
+        userEntityToResponseMapper.listOfUserEntityToUserResponse(userEntityList),
+        HttpStatus.valueOf(200));
   }
 }

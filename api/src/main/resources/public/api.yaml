@@ -104,7 +104,6 @@ paths:
           required: true
           schema:
             type: integer
-            format: int64
       responses:
         '200':
           content:
@@ -141,7 +140,6 @@ paths:
           required: true
           schema:
             type: integer
-            format: int64
       requestBody:
         content:
           application/json:
@@ -174,8 +172,7 @@ paths:
           description: The id of the user that needs to be deleted
           required: true
           schema:
-            type: string
-            format: int64
+            type: integer
       responses:
         '204':
           description: "Resource deleted successfull"

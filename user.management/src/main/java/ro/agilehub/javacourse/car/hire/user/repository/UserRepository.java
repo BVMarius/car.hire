@@ -5,5 +5,6 @@ import org.springframework.stereotype.Repository;
 import ro.agilehub.javacourse.car.hire.user.entity.UserEntity;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Integer> {
+public interface UserRepository extends JpaRepository<UserEntity, Integer> ,
+UserJdbcRepository{
 }
