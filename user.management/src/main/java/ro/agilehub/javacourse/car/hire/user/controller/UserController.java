@@ -24,6 +24,11 @@ public class UserController implements UserApi {
   @Autowired private UserMapper userMapper;
   @Autowired private UserEntityToResponseMapper userEntityToResponseMapper;
 
+public UserController(UserService userService,UserMapper userMapper, UserEntityToResponseMapper userEntityToResponseMapper){
+  this.userService=userService;
+  this.userMapper=userMapper;
+  this.userEntityToResponseMapper=userEntityToResponseMapper;
+}
 
 
   @Override
