@@ -10,5 +10,5 @@ public interface FleetManagementService {
     List<CarEntity> listCars();
     CarEntity getCarById(Integer id);
     void deleteCar(Integer id);
-    void updateCar(CarEntity carEntity, Integer id);
+    void updateCar(CarEntity carEntity);
 }

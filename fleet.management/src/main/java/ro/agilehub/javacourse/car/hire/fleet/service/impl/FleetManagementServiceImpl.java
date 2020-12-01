@@ -42,7 +42,7 @@ public class FleetManagementServiceImpl implements FleetManagementService {
   }
 
   @Override
-  public void updateCar(CarEntity carEntity, Integer id) {
+  public void updateCar(CarEntity carEntity) {
 
     carRepository.save(carEntity);
   }

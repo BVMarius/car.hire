@@ -51,7 +51,7 @@ public class CarController implements CarApi {
   public ResponseEntity<Void> updateCar(Integer carId, CreateCarRequest createCarRequest) {
     CarEntity carEntity = fleetManagementService.getCarById(carId);
     carMapper.carRequestUpdateToEntity(createCarRequest, carEntity);
-    fleetManagementService.updateCar(carEntity, carId);
+    fleetManagementService.updateCar(carEntity);
 
     return new ResponseEntity<>(HttpStatus.OK);
   }
