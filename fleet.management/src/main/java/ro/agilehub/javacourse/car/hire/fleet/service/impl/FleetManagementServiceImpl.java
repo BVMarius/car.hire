@@ -31,38 +31,19 @@ public class FleetManagementServiceImpl implements FleetManagementService {
 
   @Override
   public CarEntity getCarById(Integer id) {
-    return null;
+    return carRepository
+        .findById(id)
+        .orElseThrow(() -> new RuntimeException("no car found in repository"));
   }
 
   @Override
   public void deleteCar(Integer id) {
-    //TO DO
+    // TO DO
   }
 
   @Override
   public void updateCar(CarEntity carEntity, Integer id) {
 
-    CarEntity carToBeUpdated =
-        carRepository
-            .findById(id)
-            .orElseThrow(() -> new RuntimeException("no car found in repository"));
-
-    if (carEntity.getMake() != null) {
-      carToBeUpdated.setMake(carEntity.getMake());
-    }
-
-    if (carEntity.getModel() != null) {
-      carToBeUpdated.setModel(carEntity.getModel());
-    }
-
-    if (carEntity.getYear() != null) {
-      carToBeUpdated.setYear(carEntity.getYear());
-    }
-
-    if (carEntity.getMileageInKilometers() != null) {
-      carToBeUpdated.setYear(carEntity.getMileageInKilometers());
-    }
-
-    carRepository.save(carToBeUpdated);
+    carRepository.save(carEntity);
   }
 }

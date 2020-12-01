@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class FleetManagementController implements CarApi {
+public class CarController implements CarApi {
 
   private final CarMapper carMapper;
   private final FleetManagementService fleetManagementService;
@@ -36,8 +36,9 @@ public class FleetManagementController implements CarApi {
 
   @Override
   public ResponseEntity<CarResponse> getCarById(Integer carId) {
-
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+   CarEntity carEntity = fleetManagementService.getCarById(carId);
+   CarResponse carResponse = carMapper.carEntityToResponse(carEntity);
+    return new ResponseEntity<>(carResponse,HttpStatus.NOT_IMPLEMENTED);
   }
 
   @Override
@@ -48,7 +49,7 @@ public class FleetManagementController implements CarApi {
 
   @Override
   public ResponseEntity<Void> updateCar(Integer carId, CreateCarRequest createCarRequest) {
-    CarEntity carEntity = new CarEntity();
+    CarEntity carEntity = fleetManagementService.getCarById(carId);
     carMapper.carRequestUpdateToEntity(createCarRequest, carEntity);
     fleetManagementService.updateCar(carEntity, carId);
 

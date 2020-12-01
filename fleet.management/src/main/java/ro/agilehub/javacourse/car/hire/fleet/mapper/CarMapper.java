@@ -1,6 +1,7 @@
 package ro.agilehub.javacourse.car.hire.fleet.mapper;
 
 import org.mapstruct.*;
+import ro.agilehub.javacourse.car.hire.api.model.CarResponse;
 import ro.agilehub.javacourse.car.hire.api.model.CreateCarRequest;
 import ro.agilehub.javacourse.car.hire.fleet.entity.CarEntity;
 
@@ -12,6 +13,9 @@ public interface CarMapper {
 
     @Mapping(source="mileage", target="mileageInKilometers")
     CarEntity carRequestCreateToEntity(CreateCarRequest createCarRequest);
+
+    @Mapping(source="mileageInKilometers", target="mileage")
+    CarResponse carEntityToResponse(CarEntity carEntity);
 
 
 }
