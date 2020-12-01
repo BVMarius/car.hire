@@ -36,9 +36,9 @@ public class CarController implements CarApi {
 
   @Override
   public ResponseEntity<CarResponse> getCarById(Integer carId) {
-   CarEntity carEntity = fleetManagementService.getCarById(carId);
-   CarResponse carResponse = carMapper.carEntityToResponse(carEntity);
-    return new ResponseEntity<>(carResponse,HttpStatus.NOT_IMPLEMENTED);
+    CarEntity carEntity = fleetManagementService.getCarById(carId);
+    CarResponse carResponse = carMapper.carEntityToResponse(carEntity);
+    return new ResponseEntity<>(carResponse, HttpStatus.NOT_IMPLEMENTED);
   }
 
   @Override
