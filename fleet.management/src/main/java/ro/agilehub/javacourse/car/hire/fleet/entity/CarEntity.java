@@ -1,16 +1,18 @@
 package ro.agilehub.javacourse.car.hire.fleet.entity;
 
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+
 import javax.persistence.Table;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@Entity
 @Table(name = "cars")
 public class CarEntity extends TimestampedEntityId {
 
@@ -29,7 +31,7 @@ public class CarEntity extends TimestampedEntityId {
   private String carClass;
 
   @Column(name = "mileage_in_kilometres")
-  private String mileageInKilometers;
+  private Integer mileageInKilometers;
 
   @Column(name = "engine_size")
   private Double engineSize;

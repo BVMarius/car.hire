@@ -1,6 +1,6 @@
 package ro.agilehub.javacourse.car.hire.user.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,18 +18,12 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class UserController implements UserApi {
 
-  @Autowired private UserService userService;
-  @Autowired private UserMapper userMapper;
-  @Autowired private UserEntityToResponseMapper userEntityToResponseMapper;
-
-public UserController(UserService userService,UserMapper userMapper, UserEntityToResponseMapper userEntityToResponseMapper){
-  this.userService=userService;
-  this.userMapper=userMapper;
-  this.userEntityToResponseMapper=userEntityToResponseMapper;
-}
-
+  private final UserService userService;
+  private final UserMapper userMapper;
+  private final UserEntityToResponseMapper userEntityToResponseMapper;
 
   @Override
   public ResponseEntity<SuccessResponse> createUser(@Valid CreateUserRequest createUserRequest) {
@@ -61,7 +55,7 @@ public UserController(UserService userService,UserMapper userMapper, UserEntityT
     String lastName = createUserRequest.getLastName();
     String password = createUserRequest.getPassword();
     Integer country = createUserRequest.getCountry();
-    userService.updateUser(email,password,username,firstName,lastName,country,userId);
+    userService.updateUser(email, password, username, firstName, lastName, country, userId);
     return new ResponseEntity<>(HttpStatus.valueOf(200));
   }
 

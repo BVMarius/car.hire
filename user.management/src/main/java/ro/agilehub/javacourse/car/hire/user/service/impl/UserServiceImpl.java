@@ -2,7 +2,8 @@ package ro.agilehub.javacourse.car.hire.user.service.impl;
 
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import ro.agilehub.javacourse.car.hire.user.entity.CountryEntity;
 import ro.agilehub.javacourse.car.hire.user.entity.UserEntity;
@@ -14,12 +15,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-  public static final String NO_USER_FOUND_FOR_THE_SPECIFIED_ID = "no user found for the specified id";
-  @Autowired private UserRepository userRepository;
+  public static final String NO_USER_FOUND_FOR_THE_SPECIFIED_ID =
+      "no user found for the specified id";
+  private final UserRepository userRepository;
 
-  @Autowired private CountryRepository countryRepository;
+  private final CountryRepository countryRepository;
 
   @Override
   public UserEntity createUser(UserEntity userEntity) {
@@ -46,7 +49,6 @@ public class UserServiceImpl implements UserService {
     Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
 
     return argon2.hash(4, 1024 * 1024, 8, password);
-
   }
 
   @Override
@@ -60,7 +62,6 @@ public class UserServiceImpl implements UserService {
     return userRepository
         .findById(id)
         .orElseThrow(() -> new RuntimeException(NO_USER_FOUND_FOR_THE_SPECIFIED_ID));
-
   }
 
   @Override

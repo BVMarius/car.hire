@@ -268,7 +268,6 @@ paths:
           required: true
           schema:
             type: integer
-            format: int64
       responses:
         '200':
           content:
@@ -305,12 +304,11 @@ paths:
           required: true
           schema:
             type: integer
-            format: int64
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateUserRequest'
+              $ref: '#/components/schemas/CreateCarRequest'
         description: Creates an user
         required: true
       responses:
@@ -339,7 +337,6 @@ paths:
           required: true
           schema:
             type: integer
-            format: int64
       responses:
         '204':
           description: "Resource deleted successfull"
