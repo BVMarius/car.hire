@@ -1,8 +1,6 @@
 package ro.agilehub.javacourse.car.hire.fleet.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +9,9 @@ import javax.persistence.Table;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "cars")
 public class CarEntity extends TimestampedEntityId {

@@ -690,6 +690,7 @@ components:
             - SUV
         plateNumber:
           description: Plate number
+          type: string
         status:
           description: Car status
           enum:
@@ -729,6 +730,7 @@ components:
             - SUV
         plateNumber:
           description: Plate number
+          type: string
         status:
           description: Car status
           enum:
