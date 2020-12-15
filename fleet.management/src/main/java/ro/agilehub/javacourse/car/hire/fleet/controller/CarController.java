@@ -31,7 +31,8 @@ public class CarController implements CarApi {
 
   @Override
   public ResponseEntity<Void> deleteCar(Integer carId) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    fleetManagementService.deleteCar(carId);
+    return new ResponseEntity<>(HttpStatus.valueOf(200));
   }
 
   @Override
@@ -44,7 +45,7 @@ public class CarController implements CarApi {
   @Override
   public ResponseEntity<List<CarResponse>> listCars() {
 
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+    return new ResponseEntity<>(carMapper.carListToCarResponse(fleetManagementService.listCars()),HttpStatus.NOT_IMPLEMENTED);
   }
 
   @Override

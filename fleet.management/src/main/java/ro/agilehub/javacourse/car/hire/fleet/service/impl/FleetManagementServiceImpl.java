@@ -8,8 +8,8 @@ import ro.agilehub.javacourse.car.hire.fleet.model.StatusEnum;
 import ro.agilehub.javacourse.car.hire.fleet.repository.CarRepository;
 import ro.agilehub.javacourse.car.hire.fleet.service.FleetManagementService;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,29 +21,40 @@ public class FleetManagementServiceImpl implements FleetManagementService {
     if (carEntity.getStatus() == null) {
       carEntity.setStatus(StatusEnum.ACTIVE.getValue());
     }
+    if (carRepository.existsCarEntityByRegistration(carEntity.getRegistration().toLowerCase())) {
+      throw new RuntimeException("Id already present in db");
+    }
     return carRepository.save(carEntity);
   }
 
   @Override
   public List<CarEntity> listCars() {
-    return Collections.emptyList();
+
+    List<CarEntity> carEntityList = carRepository.findAll();
+    if (carEntityList.isEmpty()) {
+      throw new NoSuchElementException();
+    }
+
+    return carEntityList;
   }
 
   @Override
   public CarEntity getCarById(Integer id) {
     return carRepository
         .findById(id)
-        .orElseThrow(() -> new RuntimeException("no car found in repository"));
+        .orElseThrow(() -> new NoSuchElementException("no car found in repository"));
   }
 
   @Override
   public void deleteCar(Integer id) {
-    // TO DO
+    carRepository.deleteById(id);
   }
 
   @Override
   public void updateCar(CarEntity carEntity) {
-
+    if (carRepository.existsCarEntityByRegistration(carEntity.getRegistration().toLowerCase())) {
+      throw new RuntimeException("Id already present in db");
+    }
     carRepository.save(carEntity);
   }
 }
