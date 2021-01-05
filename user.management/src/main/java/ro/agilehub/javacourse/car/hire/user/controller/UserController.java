@@ -3,6 +3,7 @@ package ro.agilehub.javacourse.car.hire.user.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RestController;
 import ro.agilehub.javacourse.car.hire.api.model.CreateUserRequest;
 import ro.agilehub.javacourse.car.hire.api.model.SuccessResponse;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('MANAGER')")
 public class UserController implements UserApi {
 
   private final UserService userService;

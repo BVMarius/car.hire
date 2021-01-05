@@ -21,6 +21,10 @@ tags:
     description: Endpoints related with car resources
   - name: rental
     description: Endpoints related with rental service resources
+security:
+  - oAuth:
+      - write
+      - read
 paths:
   /user:
     post:
@@ -781,3 +785,13 @@ components:
           enum:
             - ACTIVE
             - DELETED
+  securitySchemes:
+    oAuth:
+      type: oauth2
+      description: This API uses OAuth2 with the password flow
+      flows:
+        password:
+          tokenUrl: /oauth/token
+          scopes:
+            read: get information from the API
+            write: use the API to make changes to the supporting data mode

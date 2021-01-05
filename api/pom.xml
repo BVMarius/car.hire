@@ -46,7 +46,14 @@
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>${spring-openapi.version}</version>
         </dependency>
+        <!-- Security -->
+        <dependency>
+            <groupId>org.springframework.security.oauth</groupId>
+            <artifactId>spring-security-oauth2</artifactId>
+            <version>2.5.0.RELEASE</version>
+        </dependency>
     </dependencies>
+
 
     <build>
         <plugins>
