@@ -9,7 +9,7 @@ info:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
 servers:
-  - url: http://localhost:{port}
+  - url: http://localhost:{port}/api
     description: local environment
     variables:
       port:
@@ -791,7 +791,7 @@ components:
       description: This API uses OAuth2 with the password flow
       flows:
         password:
-          tokenUrl: /oauth/token
+          tokenUrl: /api/oauth/token
           scopes:
             read: get information from the API
             write: use the API to make changes to the supporting data mode
