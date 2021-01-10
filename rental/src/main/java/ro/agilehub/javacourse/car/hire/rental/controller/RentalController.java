@@ -30,6 +30,7 @@ public class RentalController implements RentalApi {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
+  @Override
   public ResponseEntity<List<RentalResponse>> listRental() {
 
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
