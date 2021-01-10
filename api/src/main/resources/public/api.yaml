@@ -365,7 +365,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateRentalRequest'
-        description: Creates an rental
+        description: Creates a rental
         required: true
       responses:
         '201':
@@ -405,7 +405,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/RentalResponse'
-          description: List all users
+          description: List all rented cars
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -436,13 +436,12 @@ paths:
           required: true
           schema:
             type: integer
-            format: int64
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserResponse'
+                $ref: '#/components/schemas/RentalResponse'
           description: List all users
         '401':
           $ref: '#/components/responses/Unauthorized'
@@ -479,15 +478,15 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateRentalRequest'
-        description: Creates an user
+        description: Updates a rental
         required: true
       responses:
         '200':
           description: "Update successfull"
         '400':
-          description: "Invalid user supplied"
+          description: "Invalid rental supplied"
         '404':
-          description: "User not found"
+          description: "Rental not found"
         '422':
           content:
             application/json:
@@ -497,7 +496,7 @@ paths:
     delete:
       tags:
         - rental
-      summary: Delete a car
+      summary: Deletes a rental
       description: This can only be done by the logged in user.
       operationId: deleteRental
       parameters:
@@ -506,15 +505,14 @@ paths:
           description: The id of the user that needs to be deleted
           required: true
           schema:
-            type: string
-            format: int64
+            type: integer
       responses:
         '204':
           description: "Resource deleted successfull"
         '400':
-          description: "Invalid username supplied"
+          description: "Invalid rental supplied"
         '404':
-          description: "User not found"
+          description: "Rental not found"
         '422':
           content:
             application/json:
