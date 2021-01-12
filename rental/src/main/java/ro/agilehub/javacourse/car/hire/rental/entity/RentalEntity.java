@@ -12,7 +12,7 @@ import java.time.OffsetDateTime;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name="rental")
+@Table(name="rentals")
 public class RentalEntity extends TimestampedEntityId {
 
     @Column(name="consumer_id")
